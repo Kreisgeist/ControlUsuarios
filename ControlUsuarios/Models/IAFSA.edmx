@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="IAFSAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ALMACEN">
+          <Key>
+            <PropertyRef Name="AlmacenID" />
+          </Key>
+          <Property Name="codigoAlmacen" Type="varchar" MaxLength="50" />
+          <Property Name="numero" Type="smallint" />
+          <Property Name="nombre" Type="varchar" MaxLength="255" />
+          <Property Name="direccion1" Type="varchar" MaxLength="255" />
+          <Property Name="direccion2" Type="varchar" MaxLength="255" />
+          <Property Name="codigoPostal" Type="varchar" MaxLength="255" />
+          <Property Name="telefono" Type="varchar" MaxLength="50" />
+          <Property Name="sucursal" Type="smallint" />
+          <Property Name="definible1" Type="varchar" MaxLength="50" />
+          <Property Name="definible2" Type="varchar" MaxLength="50" />
+          <Property Name="definible3" Type="varchar" MaxLength="50" />
+          <Property Name="definible4" Type="float" />
+          <Property Name="definible5" Type="float" />
+          <Property Name="disponible" Type="varchar" MaxLength="50" />
+          <Property Name="EmpresaID" Type="int" Nullable="false" />
+          <Property Name="AlmacenID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Activo" Type="smallint" Nullable="false" />
+          <Property Name="ciudad" Type="varchar" MaxLength="50" />
+          <Property Name="estado" Type="varchar" MaxLength="50" />
+          <Property Name="pais" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityContainer Name="IAFSAModelStoreContainer">
+          <EntitySet Name="ALMACEN" EntityType="Self.ALMACEN" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="IAFSAModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ALMACEN">
+          <Key>
+            <PropertyRef Name="AlmacenID" />
+          </Key>
+          <Property Name="codigoAlmacen" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="numero" Type="Int16" />
+          <Property Name="nombre" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="direccion1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="direccion2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="codigoPostal" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="telefono" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="sucursal" Type="Int16" />
+          <Property Name="definible1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="definible2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="definible3" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="definible4" Type="Double" />
+          <Property Name="definible5" Type="Double" />
+          <Property Name="disponible" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EmpresaID" Type="Int32" Nullable="false" />
+          <Property Name="AlmacenID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Activo" Type="Int16" Nullable="false" />
+          <Property Name="ciudad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="pais" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityContainer Name="IAFSAEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ALMACEN" EntityType="Self.ALMACEN" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="IAFSAModelStoreContainer" CdmEntityContainer="IAFSAEntities">
+          <EntitySetMapping Name="ALMACEN">
+            <EntityTypeMapping TypeName="IAFSAModel.ALMACEN">
+              <MappingFragment StoreEntitySet="ALMACEN">
+                <ScalarProperty Name="codigoAlmacen" ColumnName="codigoAlmacen" />
+                <ScalarProperty Name="numero" ColumnName="numero" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="direccion1" ColumnName="direccion1" />
+                <ScalarProperty Name="direccion2" ColumnName="direccion2" />
+                <ScalarProperty Name="codigoPostal" ColumnName="codigoPostal" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="sucursal" ColumnName="sucursal" />
+                <ScalarProperty Name="definible1" ColumnName="definible1" />
+                <ScalarProperty Name="definible2" ColumnName="definible2" />
+                <ScalarProperty Name="definible3" ColumnName="definible3" />
+                <ScalarProperty Name="definible4" ColumnName="definible4" />
+                <ScalarProperty Name="definible5" ColumnName="definible5" />
+                <ScalarProperty Name="disponible" ColumnName="disponible" />
+                <ScalarProperty Name="EmpresaID" ColumnName="EmpresaID" />
+                <ScalarProperty Name="AlmacenID" ColumnName="AlmacenID" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="ciudad" ColumnName="ciudad" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="pais" ColumnName="pais" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

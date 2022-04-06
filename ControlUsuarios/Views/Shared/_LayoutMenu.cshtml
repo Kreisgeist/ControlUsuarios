@@ -1,0 +1,142 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <title>Control de Usuarios</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="CRUD Básico" name="description" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="~/favicon.ico">
+
+    <!-- App css -->
+    <link href="~/Content/bootstrap5/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap5/css/app.min.css" rel="stylesheet" type="text/css" id="light-style" />
+    <link href="~/Content/bootstrap5/css/app-dark.min.css" rel="stylesheet" type="text/css" id="dark-style" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+    <!-- Datatables css -->
+    <link href="~/Content/bootstrap5/css/dataTables.bootstrap5.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap5/css/responsive.bootstrap5.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body class="loading" data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": false}'>
+    <!-- Begin page -->
+    <div class="wrapper">
+        <!-- ========== Left Sidebar Start ========== -->
+        <div class="leftside-menu">
+
+            <!-- LOGO -->
+            <a href="~/Dashboard/Home" class="logo text-center logo-light">
+                <span class="logo-lg">
+                    <i class="dripicons-home" style="color:white;font-size:300%"></i>
+                </span>
+                <span class="logo-sm">
+                    <i class="dripicons-home"></i>
+                </span>
+            </a>
+
+            <!-- LOGO -->
+            <a href="~/Dashboard/Home" class="logo text-center logo-dark">
+                <span class="logo-lg">
+                    <i class="dripicons-home"></i>
+                </span>
+                <span class="logo-sm">
+                    <i class="dripicons-home"></i>
+                </span>
+            </a>
+
+            <div class="h-100" id="leftside-menu-container" data-simplebar style="padding-top: 20px">
+
+                <!--- Sidemenu -->
+                <ul class="side-nav">
+                    <li class="side-nav-title side-nav-item mt-1">Control de Usuarios</li>
+                    <li class="side-nav-item">
+                        <a data-bs-toggle="collapse" href="#sidebarControlUsuarios" aria-expanded="false" aria-controls="sidebarControlUsuarios" class="side-nav-link">
+                            <i class="dripicons-view-list"></i>
+                            <span> Funciones </span>
+                        </a>
+                        <div class="collapse" id="sidebarControlUsuarios">
+                            <ul class="side-nav-second-level">
+                                <li>
+                                    <a href="~/Auth/Control"><i class="dripicons-search"></i> Consulta</a>
+                                </li>
+                                <li>
+                                    <a href="~/Auth/Creation"><i class="dripicons-user"></i> Alta</a>
+                                </li>
+                                <li>
+                                    <a href="~/Auth/Deactivation"><i class="dripicons-trash"></i> Baja</a>
+                                </li>
+                                <li>
+                                    <a href="~/Auth/Updating"><i class="dripicons-pencil"></i> Actualización</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+                <!-- End Sidebar -->
+            </div>
+            <!-- Sidebar -left -->
+
+        </div>
+        <!-- Left Sidebar End -->
+        <!-- ============================================================== -->
+        <!-- Start Page Content here -->
+        <!-- ============================================================== -->
+
+        <div class="content-page">
+            <div class="content">
+                <!-- Topbar Start -->
+                <div class="navbar-custom">
+                    <button class="button-menu-mobile open-left">
+                        <i class="mdi mdi-menu"></i>
+                    </button>
+                </div>
+                <!-- end Topbar -->
+                <!-- Start Content-->
+                <div class="container-fluid">
+
+                    <!-- start page title -->
+                    @RenderBody()
+                    <!-- end page title -->
+
+                </div> <!-- container -->
+
+            </div> <!-- content -->
+            <!-- Footer Start -->
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <script>document.write(new Date().getFullYear())</script> © Control de Usuarios
+                        </div>
+                        <div class="col-md-6">
+                        </div>
+                    </div>
+                </div>
+            </footer>
+            <!-- end Footer -->
+
+        </div>
+
+        <!-- ============================================================== -->
+        <!-- End Page content -->
+        <!-- ============================================================== -->
+
+
+    </div>
+    <!-- END wrapper -->
+    <!-- bundle -->
+    <script src="~/Content/bootstrap5/js/vendor.min.js"></script>
+    <script src="~/Content/bootstrap5/js/app.min.js"></script>
+
+    <!-- Datatables js -->
+    <script src="~/Content/bootstrap5/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/bootstrap5/js/dataTables.bootstrap5.js"></script>
+    <script src="~/Content/bootstrap5/js/dataTables.responsive.min.js"></script>
+    <script src="~/Content/bootstrap5/js/responsive.bootstrap5.min.js"></script>
+
+    <!-- Datatable Init js -->
+    <script src="~/Content/bootstrap5/js/demo.datatable-init.js"></script>
+
+</body>
+</html>

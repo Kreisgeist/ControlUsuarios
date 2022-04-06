@@ -1,0 +1,346 @@
+﻿@model dynamic
+@using Examen.Models;
+@{
+    ViewBag.Title = "Updating";
+    Layout = "~/Views/Shared/_LayoutMenu.cshtml";
+}
+
+<!-- Success Alert Modal -->
+<div id="modal-success" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content modal-filled bg-success">
+            <div class="modal-body p-4">
+                <div class="text-center">
+                    <i class="dripicons-checkmark h1"></i>
+                    <h4 class="mt-2">¡Bien Hecho!</h4>
+                    <p class="mt-3">Tu usuario se ha actualizado correctamente!</p>
+                    <button type="button" class="btn btn-light my-2" onclick="window.location.reload()">Continuar</button>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- /.modal WARNING -->
+<div id="modal-warning" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-body p-4">
+                <div class="text-center">
+                    <i class="dripicons-warning h1 text-warning"></i>
+                    <h4 class="mt-2">Oops!</h4>
+                    <p class="mt-3">Ocurrió un error al registrar tu solicitud. Por favor intentalo de nuevo más tarde.</p>
+                    <p class="mt-3">Error: <b id="errorServidor"></b></p>
+                    <button type="button" class="btn btn-warning my-2" data-bs-dismiss="modal">Continuar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.modal WARNING -->
+<div id="modal-camposRepetidos" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-body p-4">
+                <div class="text-center">
+                    <i class="dripicons-warning h1 text-warning"></i>
+                    <h4 class="mt-2">Oops!</h4>
+                    <p class="mt-3">Parece que uno de los datos que intentas guardar, ya existe :(</p>
+                    <p class="mt-3">Campo Repetido: <b id="errorCamposRepetidos"></b></p>
+                    <button type="button" class="btn btn-warning my-2" data-bs-dismiss="modal">Continuar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12" style="padding-left: 40px; padding-right: 40px; padding-top: 30px">
+        <hr />
+        <h1>Actualización de Usuarios</h1>
+        <hr />
+    </div>
+</div>
+<div class="row" id="div-updateUser">
+    <div class="col-12" style="padding-left: 40px; padding-right: 40px; padding-top: 30px">
+        <form>
+            <div class="row g-2">
+                <div class="mb-3 col-md-2">
+                    <button type="button" class="btn btn-primary" onclick="deselectUser()">Volver</button>
+                </div>
+            </div>
+            <div class="row g-2">
+                <div class="mb-3 col-md-3">
+                    <label for="input-user">Usuario</label>
+                    <input type="text" id="input-user" class="form-control" />
+                    <p class="text-danger" id="validation-user">El campo debe contener minimo 7 carácteres</p>
+                </div>
+                <div class="mb-3 col-md-3">
+                    <label for="input-password">Contraseña</label>
+                    <input type="text" id="input-password" class="form-control" />
+                    <p class="text-danger" id="validation-password-mayus">La contraseña debe contener al menos un carácter en <strong>Mayúscula</strong></p>
+                    <p class="text-danger" id="validation-password-minus">La contraseña debe contener al menos un carácter en <strong>Minúscula</strong></p>
+                    <p class="text-danger" id="validation-password-symbol">La contraseña debe contener al menos un <strong>Símbolo (!#"$%^&*)</strong></p>
+                    <p class="text-danger" id="validation-password-number">La contraseña debe contener al menos un <strong>Número</strong></p>
+                    <p class="text-danger" id="validation-password-lenght">La contraseña debe tener una <strong>Longitud</strong> de al menos 8 carácteres</p>
+                </div>
+                <div class="mb-3 col-md-4">
+                    <label for="input-email">Correo</label>
+                    <input type="email" id="input-email" class="form-control" />
+                    <p class="text-danger" id="validation-email">Por favor introduce un correo <strong>valido</strong></p>
+                </div>
+                <div class="mb-3 col-md-2">
+                    <label for="select-gender">Sexo</label>
+                    <select class="form-select" id="select-gender">
+                        <option disabled selected hidden>Selecciona Opción</option>
+                        @foreach (Genders item in Model.Generos)
+                        {
+                            <option value="@item.id">@item.Gender</option>
+                        }
+                    </select>
+                    <p class="text-danger" id="validation-gender">Selecciona el sexo del usuario</p>
+                </div>
+            </div>
+            <div class="row g-2 justify-content-end">
+                <div class="mb-3 col-md-2 text-end">
+                    <button type="button" class="btn btn-primary" onclick="updateUser()">Actualizar Usuario</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="row" id="div-users">
+    <div class="col-12" style="padding-left: 40px; padding-right: 40px; padding-top: 30px">
+        <table id="basic-datatable" class="table dt-responsive nowrap w-100">
+            <thead>
+                <tr>
+                    <td>Id</td>
+                    <td>Usuario</td>
+                    <td>Contraseña</td>
+                    <td>Email</td>
+                    <td>Sexo</td>
+                    <td>Fecha de Creación</td>
+                    <td>Estatus</td>
+                    <td>Acciones</td>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Users.Count > 0)
+                {
+                    foreach (Users item in Model.Users)
+                    {
+                        <tr>
+                            <td>@item.id</td>
+                            <td>@item.user</td>
+                            <td>@item.password</td>
+                            <td>@item.email</td>
+                            <td>@item.Genders.Gender</td>
+                            <td>@item.creationDate.ToString("dd-MM-yyyy, hh:mm:ss")</td>
+                            @if (item.status == true)
+                            {
+                                <td>Activo (ACTIVE)</td>
+
+                            }
+                            else
+                            {
+                                <td>Inactivo (INACTIVE)</td>
+                            }
+                            <td><button type="button" value="@item.id" class="btn btn-primary" onclick="selectedUser(this.value)">Actualizar</button></td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="8" class="text-center text-info">No hay usuarios registrados</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<script>
+
+    let activeId
+    var upperCase = new RegExp('[A-Z]');
+    var lowerCase = new RegExp('[a-z]');
+    var numbers = new RegExp('[0-9]');
+    var simbols = /^(?=.*[!#"$%^&*])/;
+    var email = /^\S+@@\S+\.\S+$/;
+
+    $(document).ready(function () {
+
+        $('#div-updateUser').hide();
+        $('.text-danger').hide();
+
+    });
+
+    function selectedUser(id) {
+
+        activeId = id;
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("getUser", "Auth")',
+            data: { "id": id },
+            datatype: "json",
+            cache: false,
+            success: function (data) {
+
+                if (data != 2) {
+
+                    $('#div-users').hide('slow');
+                    $('#input-user').val(data[0]);
+                    $('#input-password').val(data[1]);
+                    $('#input-email').val(data[2]);
+                    $('#select-gender').val(data[3]).change();
+                    $('#div-updateUser').show('slow');
+
+                }
+                else {
+                    alert("Ocurrio un error de comunicación y no pudimos recuperar la información del usuario :(");
+                }
+
+            },
+            error: function (error) {
+
+                alert(error.responseText);
+            }
+        });
+
+
+    }
+
+    function deselectUser() {
+
+        $('#div-updateUser').hide('slow');
+        $('#div-users').show('slow');
+
+    }
+
+    function updateUser() {
+
+        var retorna = true;
+
+        if ($('#input-user').val().length < 7) {
+
+            $('#validation-user').show();
+            retorna = false;
+
+        }
+        else {
+            $('#validation-user').hide();
+        }
+
+        if (!$('#input-password').val().match(upperCase)) {
+
+            $('#validation-password-mayus').show();
+            retorna = false;
+
+        }
+        else {
+
+            $('#validation-password-mayus').hide();
+
+        }
+
+        if (!$('#input-password').val().match(lowerCase)) {
+
+            $('#validation-password-minus').show();
+            retorna = false;
+
+        }
+        else {
+            $('#validation-password-minus').hide();
+        }
+
+        if (!$('#input-password').val().match(numbers)) {
+
+            $('#validation-password-number').show();
+            retorna = false;
+
+        }
+        else {
+            $('#validation-password-number').hide();
+        }
+
+        if (!simbols.test($('#input-password').val())) {
+
+            $('#validation-password-symbol').show();
+            retorna = false;
+
+        }
+        else {
+            $('#validation-password-symbol').hide();
+        }
+
+        if ($('#input-password').val().length < 8) {
+
+            $('#validation-password-lenght').show();
+            retorna = false;
+
+        }
+        else {
+            $('#validation-password-lenght').hide();
+        }
+
+        if (!email.test($('#input-email').val())) {
+
+            $('#validation-email').show();
+            retorna = false;
+
+        }
+        else {
+            $('#validation-email').hide();
+        }
+
+        if ($('#select-gender').val() == null) {
+            $('#validation-gender').show();
+            retorna = false;
+        }
+        else {
+            $('#validation-gender').hide();
+        }
+
+        if (retorna) {
+
+            let user = {
+
+                user: $('#input-user').val(),
+                password: $('#input-password').val(),
+                email: $('#input-email').val(),
+                gender: $('#select-gender').val()
+
+            }
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("updateUser", "Auth")',
+                data: { "user": user, "id": activeId },
+                datatype: "json",
+                cache: false,
+                success: function (data) {
+
+                    if (data == 1) {
+                        $('#modal-success').modal('show');
+                    }
+                    else if (data == 3) {
+                        $('#errorCamposRepetidos').text("Email");
+                        $('#modal-camposRepetidos').modal('show');
+                    }
+                    else {
+                        $('#errorCamposRepetidos').text("Nombre de Usuario");
+                        $('#modal-camposRepetidos').modal('show');
+                    }
+
+                },
+                error: function (error) {
+
+                    $('#errorServidor').text(error.responseText);
+                    $('#modal-warning').modal('show');
+                }
+            });
+
+        }
+
+    }
+
+</script>

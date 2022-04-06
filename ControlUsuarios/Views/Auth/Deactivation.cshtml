@@ -1,0 +1,165 @@
+﻿@model dynamic
+@using Examen.Models;
+@{
+    ViewBag.Title = "Deactivation";
+    Layout = "~/Views/Shared/_LayoutMenu.cshtml";
+}
+
+<!-- Success Alert Modal -->
+<div id="modal-successDeactivation" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content modal-filled bg-success">
+            <div class="modal-body p-4">
+                <div class="text-center">
+                    <i class="dripicons-checkmark h1"></i>
+                    <h4 class="mt-2">Todo correcto</h4>
+                    <p class="mt-3">Tu usuario ha sido desactivado correctamente</p>
+                    <button type="button" class="btn btn-light my-2" onclick="window.location.reload()">Continuar</button>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- Success Alert Modal -->
+<div id="modal-successReactivation" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content modal-filled bg-success">
+            <div class="modal-body p-4">
+                <div class="text-center">
+                    <i class="dripicons-checkmark h1"></i>
+                    <h4 class="mt-2">Todo correcto</h4>
+                    <p class="mt-3">Tu usuario se ha reactivado correctamente</p>
+                    <button type="button" class="btn btn-light my-2" onclick="window.location.reload()">Continuar</button>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- /.modal WARNING -->
+<div id="modal-warning" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-body p-4">
+                <div class="text-center">
+                    <i class="dripicons-warning h1 text-warning"></i>
+                    <h4 class="mt-2">Oops!</h4>
+                    <p class="mt-3">Ocurrió un error al registrar tu solicitud.</p>
+                    <p class="mt-3">Error: <b id="errorServidor"></b></p>
+                    <button type="button" class="btn btn-warning my-2" data-bs-dismiss="modal">Continuar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12" style="padding-left: 40px; padding-right: 40px; padding-top: 30px">
+        <hr />
+        <h1>Baja de Usuarios</h1>
+        <hr />
+        <table id="basic-datatable" class="table dt-responsive nowrap w-100">
+            <thead>
+                <tr>
+                    <td>Id</td>
+                    <td>Usuario</td>
+                    <td>Contraseña</td>
+                    <td>Email</td>
+                    <td>Sexo</td>
+                    <td>Fecha de Creación</td>
+                    <td>Estatus</td>
+                    <td>Acciones</td>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Users.Count > 0)
+                {
+                    foreach (Users item in Model.Users)
+                    {
+                        <tr>
+                            <td>@item.id</td>
+                            <td>@item.user</td>
+                            <td>@item.password</td>
+                            <td>@item.email</td>
+                            <td>@item.Genders.Gender</td>
+                            <td>@item.creationDate.ToString("dd-MM-yyyy, hh:mm:ss")</td>
+                            @if (item.status == true)
+                            {
+                                <td>Activo (ACTIVE)</td>
+                                <td><button type="button" value="@item.id" class="btn btn-danger" onclick="deactivateUser(this.value)">Desactivar</button></td>
+                            }
+                            else
+                            {
+                                <td>Inactivo (INACTIVE)</td>
+                                <td><button type="button" value="@item.id" class="btn btn-success" onclick="reactivateUser(this.value)">Reactivar</button></td>
+                            }
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="8" class="text-center text-info">No hay usuarios registrados</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<script>
+
+    function deactivateUser(id) {
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("deactivateUser", "Auth")',
+            data: { "id": id },
+            datatype: "json",
+            cache: false,
+            success: function (data) {
+
+                if (data == 1) {
+                    $('#modal-successDeactivation').modal('show');
+                }
+                else {
+                    $('#errorServidor').text("Usuario no encontrado");
+                    $('#modal-warning').modal('show');
+                }
+
+            },
+            error: function (error) {
+
+                $('#errorServidor').text(error.responseText);
+                $('#modal-warning').modal('show');
+
+            }
+        });
+
+    }
+
+    function reactivateUser(id) {
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("reactivateUser", "Auth")',
+            data: { "id": id },
+            datatype: "json",
+            cache: false,
+            success: function (data) {
+
+                if (data == 1) {
+                    $('#modal-successReactivation').modal('show');
+                }
+                else {
+                    $('#errorServidor').text("Usuario no encontrado");
+                    $('#modal-warning').modal('show');
+                }
+
+            },
+            error: function (error) {
+                $('#errorServidor').text(error.responseText);
+                $('#modal-warning').modal('show');
+            }
+        });
+
+    }
+
+</script>

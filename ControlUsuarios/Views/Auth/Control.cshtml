@@ -1,0 +1,57 @@
+﻿@model dynamic
+@using Examen.Models;
+@{
+    ViewBag.Title = "Control de Usuarios";
+    Layout = "~/Views/Shared/_LayoutMenu.cshtml";
+}
+
+<div class="row">
+    <div class="col-12" style="padding-left: 40px; padding-right: 40px; padding-top: 30px">
+        <hr />
+        <h1>Usuarios</h1>
+        <hr />
+        <table id="basic-datatable" class="table dt-responsive nowrap w-100">
+            <thead>
+                <tr>
+                    <td>Id</td>
+                    <td>Usuario</td>
+                    <td>Contraseña</td>
+                    <td>Email</td>
+                    <td>Sexo</td>
+                    <td>Fecha de Creación</td>
+                    <td>Estatus</td>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Users.Count > 0)
+                {
+                    foreach (Users item in Model.Users)
+                    {
+                        <tr>
+                            <td>@item.id</td>
+                            <td>@item.user</td>
+                            <td>@item.password</td>
+                            <td>@item.email</td>
+                            <td>@item.Genders.Gender</td>
+                            <td>@item.creationDate.ToString("dd-MM-yyyy, hh:mm:ss")</td>
+                            @if (item.status == true)
+                            {
+                                <td>Activo (ACTIVE)</td>
+                            }
+                            else
+                            {
+                                <td>Inactivo (INACTIVE)</td>
+                            }
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="8" class="text-center text-info">No hay usuarios registrados</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
